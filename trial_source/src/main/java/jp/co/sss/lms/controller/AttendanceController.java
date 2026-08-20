@@ -46,8 +46,26 @@ public class AttendanceController {
 		List<AttendanceManagementDto> attendanceManagementDtoList = studentAttendanceService
 				.getAttendanceManagement(loginUserDto.getCourseId(), loginUserDto.getLmsUserId());
 		model.addAttribute("attendanceManagementDtoList", attendanceManagementDtoList);
+		
+		try {
+	        boolean notEntered =
+	                studentAttendanceService.notEnterCheck();
 
-		return "attendance/detail";
+	        if (notEntered) {
+	            model.addAttribute("error","過去日の勤怠に未入力があります。");
+
+	            return "attendance/detail";
+	        }
+
+	        return "attendance/detail";
+
+	    } catch (ParseException e) {
+	        model.addAttribute("error","日付の取得または解析に失敗しました。");
+
+	        return "attendance/detail";
+	    }
+		
+		//return "attendance/detail";
 	}
 
 	/**

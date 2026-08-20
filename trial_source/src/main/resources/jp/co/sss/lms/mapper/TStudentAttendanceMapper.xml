@@ -86,15 +86,18 @@
 		WHERE student_attendance_id = #{studentAttendanceId}
 	</update>
 	
-	<select id="notEnterCount" resultType="jp.co.sss.lms.entity.TStudentAttendance">
-		SELECT * 
+	<select id="notEnterCount" resultType="int">
+		SELECT COUNT(*)
 		FROM t_student_attendance
 		WHERE 
-			lmsUserId = #{lmsUserId}
-			AND lmsUserId = #{deleteFlg}
-			AND trainingDate < #{trainingDate}
+			lms_user_id = #{lmsUserId}
+			AND delete_flg = #{deleteFlg}
+			AND training_date &lt; #{trainingDate}
 			AND status != 1
-			AND (trainingStartTime = '' OR trainingEndTime = '' OR trainingStartTime IS NULL OR trainingEndTime IS NULL)
+			AND (training_start_time = '' 
+				OR training_end_time = '' 
+				OR training_start_time IS NULL 
+				OR training_end_time IS NULL)
 	</select>
 	
 </mapper>

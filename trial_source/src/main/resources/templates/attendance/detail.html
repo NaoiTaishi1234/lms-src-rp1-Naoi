@@ -16,7 +16,8 @@
 			<span>[[${message}]]</span>
 		</div>
 	</th:block>
-
+	
+	
 	<h2>勤怠管理</h2>
 
 	<!-- エラーメッセージ -->
@@ -26,6 +27,10 @@
 		</ul>
 	</th:block>
 
+    <script th:inline="javascript">
+        alert(/*[[${error}]]*/'');
+    </script>
+	
 	<th:block th:if="${session.loginUserDto.role == '0001'}">
 		<div class="well well-lg p10 mb10">
 			<div class="form-group">

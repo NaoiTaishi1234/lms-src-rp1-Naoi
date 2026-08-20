@@ -339,7 +339,7 @@ public class StudentAttendanceService {
 	 * 未入力件数
 	 * 
 	 */
-	public Boolean notEnterCheck() throws ParseException{
+	public boolean notEnterCheck() throws ParseException{
 		
 		Integer notEntered;
 		
@@ -355,17 +355,8 @@ public class StudentAttendanceService {
 											   		   Constants.DB_FLG_FALSE,
 											   		   trainingDate);
 		
-		
 		//取得した未入力カウントが0より大きいか
-		if(notEntered == 0) {			
-			return false;
-		}else { 
-			//過去日入力ダイアログを表示
-			
-			
-			
-			return true;
-		}
+		return notEntered != null && notEntered > 0;
 	}
 	
 }
