@@ -336,8 +336,10 @@ public class StudentAttendanceService {
 	}
 
 	/**
-	 * 未入力件数
+	 * 勤怠登録・未入力件数
 	 * 
+	 * @return boolean
+	 * @throws ParseException
 	 */
 	public boolean notEnterCheck() throws ParseException{
 		
@@ -356,7 +358,11 @@ public class StudentAttendanceService {
 											   		   trainingDate);
 		
 		//取得した未入力カウントが0より大きいか
-		return notEntered != null && notEntered > 0;
+		if (notEntered != null && notEntered > 0) {
+	        return true; 
+	    } else {
+	        return false;
+	    }
 	}
 	
 }
