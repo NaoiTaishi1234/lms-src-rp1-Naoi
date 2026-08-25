@@ -40,32 +40,23 @@ public class AttendanceController {
 	 * @throws ParseException
 	 */
 	@RequestMapping(path = "/detail", method = RequestMethod.GET)
-	public String index(Model model) {
+	public String index(Model model) throws ParseException {
 
 		// 勤怠一覧の取得
 		List<AttendanceManagementDto> attendanceManagementDtoList = studentAttendanceService
 				.getAttendanceManagement(loginUserDto.getCourseId(), loginUserDto.getLmsUserId());
 		model.addAttribute("attendanceManagementDtoList", attendanceManagementDtoList);
-		
-		try {
-	        boolean notEntered =
-	                studentAttendanceService.notEnterCheck();
 
-	        if (notEntered) {
-	            model.addAttribute("error","過去日の勤怠に未入力があります。");
+		//未入力件数が1つ以上か
+		boolean notEntered = studentAttendanceService.notEnterCheck();
 
-	            return "attendance/detail";
-	        }
+		//tureの場合、エラーとメッセージが送信
+		if (notEntered) {
+			model.addAttribute("error", "過去日の勤怠に未入力があります。");
+		}
 
-	        return "attendance/detail";
+		return "attendance/detail";
 
-	    } catch (ParseException e) {
-	        model.addAttribute("error","日付の取得または解析に失敗しました。");
-
-	        return "attendance/detail";
-	    }
-		
-		//return "attendance/detail";
 	}
 
 	/**

@@ -64,17 +64,18 @@ public interface TStudentAttendanceMapper {
 	 * @return 更新結果
 	 */
 	Boolean update(TStudentAttendance tStudentAttendance);
-	
+
 	/**
 	 * 未入力件数の確認
 	 * 
+	 * @author 直井帝志 - Task.25
 	 * @param lmsUserId
 	 * @param deleteFlg
+	 * @param trainingDate
 	 * @return 未入力件数
 	 */
 	int notEnterCount(@Param("lmsUserId") Integer lmsUserId,
-						  @Param("deleteFlg") Short deleteFlg,
-						  @Param("trainingDate") Date trainingDate);
-	
+			@Param("deleteFlg") Short deleteFlg,
+			@Param("trainingDate") Date trainingDate);
 
 }

@@ -27,9 +27,10 @@
 		</ul>
 	</th:block>
 
-    <script th:inline="javascript">
-        alert(/*[[${error}]]*/'');
-    </script>
+    <script th:if="${error != null}" th:inline="javascript">
+    	alert(/*[[${error}]]*/ '');
+	</script>
+
 	
 	<th:block th:if="${session.loginUserDto.role == '0001'}">
 		<div class="well well-lg p10 mb10">
