@@ -46,5 +46,22 @@ public class DailyAttendanceForm {
 	private String courseName;
 	/** インデックス */
 	private String index;
+	
+	public void setTrainingStartTimeHour(Integer startHour) {
+		
+	};
+	
+	public void setTrainingStartTimeMinute(Integer startMinute) {
+		
+	};
+	
+	public void setTrainingEndTimeHour(Integer endHour) {
+		
+	};
+	
+	public void setTrainingEndTimeMinute(Integer endMinute) {
+		
+	};
 
+	
 }

@@ -47,10 +47,11 @@ public class AttendanceController {
 				.getAttendanceManagement(loginUserDto.getCourseId(), loginUserDto.getLmsUserId());
 		model.addAttribute("attendanceManagementDtoList", attendanceManagementDtoList);
 
+		//@author 直井帝志
 		//未入力件数が1つ以上か
 		boolean notEntered = studentAttendanceService.notEnterCheck();
 
-		//tureの場合、エラーとメッセージが送信
+		//trueの場合、エラーとメッセージが送信
 		if (notEntered) {
 			model.addAttribute("error", "過去日の勤怠に未入力があります。");
 		}

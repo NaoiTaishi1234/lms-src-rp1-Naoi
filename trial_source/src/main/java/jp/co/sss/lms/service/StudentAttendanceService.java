@@ -3,6 +3,7 @@ package jp.co.sss.lms.service;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -212,7 +213,13 @@ public class StudentAttendanceService {
 	 */
 	public AttendanceForm setAttendanceForm(
 			List<AttendanceManagementDto> attendanceManagementDtoList) {
-
+		//時刻
+		String timeString;
+		Integer startHour;
+		Integer startMinute;
+		Integer endHour;
+		Integer endMinute;
+		
 		AttendanceForm attendanceForm = new AttendanceForm();
 		attendanceForm.setAttendanceList(new ArrayList<DailyAttendanceForm>());
 		attendanceForm.setLmsUserId(loginUserDto.getLmsUserId());
@@ -220,6 +227,26 @@ public class StudentAttendanceService {
 		attendanceForm.setLeaveFlg(loginUserDto.getLeaveFlg());
 		attendanceForm.setBlankTimes(attendanceUtil.setBlankTime());
 
+		// 時間
+		//プルダウン
+		LinkedHashMap<Integer, String> hourMap = new LinkedHashMap<>();
+		//先頭を無し
+		hourMap.put(null, "");
+		
+		for (int i = 0; i < 24; i++) {
+		    hourMap.put(i, String.format("%02d", i + 1));
+		}
+
+		// 分
+		//プルダウン
+		LinkedHashMap<Integer, String> minuteMap = new LinkedHashMap<>();
+		//先頭を無し
+		minuteMap.put(null, "");
+
+		for (int i = 0; i < 60; i++) {
+		    minuteMap.put(i, String.format("%02d", i + 1));
+		}
+		
 		// 途中退校している場合のみ設定
 		if (loginUserDto.getLeaveDate() != null) {
 			attendanceForm
@@ -252,6 +279,25 @@ public class StudentAttendanceService {
 			dailyAttendanceForm.setStatusDispName(attendanceManagementDto.getStatusDispName());
 
 			attendanceForm.getAttendanceList().add(dailyAttendanceForm);
+			
+			
+			//出勤時刻の取得
+			timeString=attendanceManagementDto.getTrainingStartTime();//"09:15"
+			//開始時
+			startHour=Integer.parseInt(timeString.substring(0, 2));//9		
+			dailyAttendanceForm.setTrainingStartTimeHour(startHour);
+			//開始分		
+			startMinute=Integer.parseInt(timeString.substring(0, 2));//15
+			dailyAttendanceForm.setTrainingStartTimeMinute(startMinute);
+			
+			//退勤時刻の取得
+			timeString=attendanceManagementDto.getTrainingEndTime();//"18:10"
+			//終了時
+			endHour=Integer.parseInt(timeString.substring(0, 2));//18
+			dailyAttendanceForm.setTrainingEndTimeHour(endHour);
+			//終了分			
+			endMinute=Integer.parseInt(timeString.substring(0, 2));//10
+			dailyAttendanceForm.setTrainingEndTimeMinute(endMinute);
 		}
 
 		return attendanceForm;
@@ -359,6 +405,19 @@ public class StudentAttendanceService {
 		} else {
 			return false;
 		}
+	}
+
+	public void formatConversion(AttendanceForm attendanceForm) {
+		
+		/*//attendanceForm = 
+		// 出勤時刻の「時」と「分」が両方入力されている場合
+		if (startHour  != null && startMinute != null) {
+			trainingStartTime = 
+		};
+		// 退勤時刻の「時」と「分」が両方入力されている場合
+		if (endHour  != null && endMinute != null) {
+			trainingEndTime = 
+		}*/
 	}
 
 }
